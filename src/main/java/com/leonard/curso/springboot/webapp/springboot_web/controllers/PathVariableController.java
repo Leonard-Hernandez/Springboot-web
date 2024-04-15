@@ -1,10 +1,10 @@
 package com.leonard.curso.springboot.webapp.springboot_web.controllers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +30,12 @@ public class PathVariableController {
 
     @Value("${config.code}")
     private Integer code;
+
+    @Value("#{ '${config.listOfValues}'.split(',') }")
+    private List<String> valueList;
+
+    @Value("#{ '${config.listOfValues}'.toUpperCase() }")
+    private String valueString;
 
     @GetMapping("/baz/{message}")
     public ParamDto baz(@PathVariable() String message){
@@ -63,6 +69,8 @@ public class PathVariableController {
         json.put("code", code);
         json.put("message", message);
         json.put("listOfValues", listOfValues);
+        json.put("ValueList", valueList); 
+        json.put("valueString", valueString);
         return json;
 
     }
